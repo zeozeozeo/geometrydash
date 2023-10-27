@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 minhook = "0.3.0"
 winapi = { version = "0.3.9", features = ["libloaderapi", "memoryapi"] }
-fmod = { path = "fmod", optional = true }
+fmod = { path = "fmod", optional = true, version = "*" }
 
 [features]
 gd_fmod = ["fmod"]
