@@ -6,6 +6,9 @@ mod level_settings;
 mod play_layer;
 mod player_object;
 
+#[cfg(feature = "fmod")]
+pub mod fmod;
+
 pub use game_manager::*;
 pub use game_object::*;
 pub use hook::*;

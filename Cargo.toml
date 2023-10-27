@@ -8,15 +8,17 @@ readme = "README.md"
 repository = "https://github.com/zeozeozeo/geometrydash"
 homepage = "https://github.com/zeozeozeo/geometrydash"
 license = "BSL-1.0"
-keywords = ["geometry dash", "modding", "hook", "mod"]
-categories = []
+keywords = ["geometrydash", "modding", "hook", "mod"]
+build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 minhook = "0.3.0"
 winapi = { version = "0.3.9", features = ["libloaderapi", "memoryapi"] }
-fmod = { path = "fmod", optional = true, version = "*" }
+
+[build-dependencies]
+bindgen = "0.68.1"
 
 [features]
-gd_fmod = ["fmod"]
+fmod = []
