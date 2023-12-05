@@ -1,8 +1,6 @@
-use winapi::shared::minwindef::FARPROC;
-
-use crate::{cstr, impl_addr_funcs, Ptr};
-
 use super::get_hmod;
+use crate::{cstr, impl_addr_funcs, Ptr};
+use windows::{core::PCSTR, Win32::Foundation::FARPROC};
 
 /// Class that creates and handle the main Window and manages how
 /// and when to execute the Scenes.
@@ -39,9 +37,9 @@ impl CCDirector {
     pub fn shared() -> Self {
         unsafe {
             let address = (std::mem::transmute::<FARPROC, unsafe extern "cdecl" fn() -> usize>(
-                winapi::um::libloaderapi::GetProcAddress(
+                windows::Win32::System::LibraryLoader::GetProcAddress(
                     get_hmod(),
-                    cstr!("?sharedDirector@CCDirector@cocos2d@@SAPAV12@XZ"),
+                    PCSTR(cstr!("?sharedDirector@CCDirector@cocos2d@@SAPAV12@XZ")),
                 ),
             ))();
             Self { address }
@@ -52,9 +50,9 @@ impl CCDirector {
     pub fn get_animation_interval(&self) -> f64 {
         unsafe {
             (std::mem::transmute::<FARPROC, unsafe extern "cdecl" fn(Ptr) -> f64>(
-                winapi::um::libloaderapi::GetProcAddress(
+                windows::Win32::System::LibraryLoader::GetProcAddress(
                     get_hmod(),
-                    cstr!("?getAnimationInterval@CCDirector@cocos2d@@QAENXZ"),
+                    PCSTR(cstr!("?getAnimationInterval@CCDirector@cocos2d@@QAENXZ")),
                 ),
             ))(self.address)
         }
