@@ -1,6 +1,7 @@
 use crate::{impl_addr_funcs, read_mem, Ptr};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct LevelSettings {
     address: Ptr,
 }

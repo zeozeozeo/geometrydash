@@ -1,6 +1,7 @@
 use crate::{impl_addr_funcs, impl_get_set, Ptr};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct GameObject {
     address: Ptr,
 }

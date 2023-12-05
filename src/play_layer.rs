@@ -36,6 +36,7 @@ use crate::{
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct PlayLayer {
     address: Ptr,
 }

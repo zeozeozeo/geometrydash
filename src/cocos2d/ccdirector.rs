@@ -24,6 +24,7 @@ use windows::{core::PCSTR, Win32::Foundation::FARPROC};
 /// - GL_COLOR_ARRAY is enabled
 /// - GL_TEXTURE_COORD_ARRAY is enabled
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct CCDirector {
     address: Ptr,
 }

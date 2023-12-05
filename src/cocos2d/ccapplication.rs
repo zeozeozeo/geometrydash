@@ -3,6 +3,7 @@ use crate::{cstr, Ptr};
 use windows::{core::PCSTR, Win32::Foundation::FARPROC};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct CCApplication {
     address: Ptr,
 }

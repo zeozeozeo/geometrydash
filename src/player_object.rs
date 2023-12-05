@@ -58,6 +58,7 @@ pub enum GameMode {
 
 /// PlayerObject
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct PlayerObject {
     address: Ptr,
 }
