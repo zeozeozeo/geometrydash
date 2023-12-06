@@ -3,12 +3,12 @@ mod ccdirector;
 
 pub use ccapplication::*;
 pub use ccdirector::*;
-
-use winapi::shared::minwindef::HMODULE;
+use windows::Win32::Foundation::HMODULE;
 
 /// Get the `libcocos2d.dll` module handle.
 pub fn get_hmod() -> HMODULE {
-    unsafe { winapi::um::libloaderapi::GetModuleHandleA(crate::cstr!("libcocos2d.dll")) }
+    use windows::Win32::System::LibraryLoader::GetModuleHandleA;
+    unsafe { GetModuleHandleA(windows::core::s!("libcocos2d.dll")).unwrap() }
 }
 
 /*
@@ -20,7 +20,7 @@ macro_rules! cocos2dx_procname {
             (::std::mem::transmute::<
                 $crate::winapi::shared::minwindef::FARPROC,
                 extern "cdecl" fn($($($t),+)?) $(-> $ret)?,
-            >(winapi::um::libloaderapi::GetProcAddress(
+            >(windows::Win32::System::LibraryLoader::GetProcAddress(
                 $crate::cocos2d::get_hmod(),
                 $crate::cstr!($procname),
             )))
@@ -37,7 +37,7 @@ macro_rules! cocos2dx_callproc (
             (::std::mem::transmute::<
                 $crate::winapi::shared::minwindef::FARPROC,
                 extern "cdecl" fn($($($t),+)?) $(-> $ret)?,
-            >(winapi::um::libloaderapi::GetProcAddress(
+            >(windows::Win32::System::LibraryLoader::GetProcAddress(
                 $crate::cocos2d::get_hmod(),
                 $crate::cstr!($procname),
             )))($($($arg),+)?)

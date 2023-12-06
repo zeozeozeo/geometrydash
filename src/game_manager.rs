@@ -10,6 +10,7 @@ use crate::{get_base, read_ptr, PlayLayer, Ptr};
 // GameManager.userName = GameManager + 0x198
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct GameManager {
     /// GameManager shared state
     address: Ptr,

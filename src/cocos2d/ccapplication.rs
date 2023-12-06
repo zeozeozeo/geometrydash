@@ -1,10 +1,9 @@
-use winapi::shared::minwindef::FARPROC;
-
-use crate::{cstr, Ptr};
-
 use super::get_hmod;
+use crate::Ptr;
+use windows::Win32::Foundation::FARPROC;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(transparent)]
 pub struct CCApplication {
     address: Ptr,
 }
@@ -18,9 +17,9 @@ impl CCApplication {
     pub fn shared() -> Self {
         unsafe {
             let address = (std::mem::transmute::<FARPROC, unsafe extern "cdecl" fn() -> Ptr>(
-                winapi::um::libloaderapi::GetProcAddress(
+                windows::Win32::System::LibraryLoader::GetProcAddress(
                     get_hmod(),
-                    cstr!("?sharedApplication@CCApplication@cocos2d@@SAPAV12@XZ"),
+                    windows::core::s!("?sharedApplication@CCApplication@cocos2d@@SAPAV12@XZ"),
                 ),
             ))();
             Self { address }
@@ -31,9 +30,9 @@ impl CCApplication {
     pub fn set_animation_interval(&self, interval: f64) {
         unsafe {
             (std::mem::transmute::<FARPROC, unsafe extern "fastcall" fn(Ptr, Ptr, f64)>(
-                winapi::um::libloaderapi::GetProcAddress(
+                windows::Win32::System::LibraryLoader::GetProcAddress(
                     get_hmod(),
-                    cstr!("?setAnimationInterval@CCApplication@cocos2d@@UAEXN@Z"),
+                    windows::core::s!("?setAnimationInterval@CCApplication@cocos2d@@UAEXN@Z"),
                 ),
             ))(self.address, 0, interval)
         }
