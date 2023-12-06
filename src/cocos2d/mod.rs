@@ -7,9 +7,8 @@ use windows::Win32::Foundation::HMODULE;
 
 /// Get the `libcocos2d.dll` module handle.
 pub fn get_hmod() -> HMODULE {
-    use windows::core::PCSTR;
     use windows::Win32::System::LibraryLoader::GetModuleHandleA;
-    unsafe { GetModuleHandleA(PCSTR(crate::cstr!("libcocos2d.dll"))).unwrap() }
+    unsafe { GetModuleHandleA(windows::core::s!("libcocos2d.dll")).unwrap() }
 }
 
 /*

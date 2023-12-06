@@ -1,6 +1,6 @@
 use super::get_hmod;
-use crate::{cstr, Ptr};
-use windows::{core::PCSTR, Win32::Foundation::FARPROC};
+use crate::Ptr;
+use windows::Win32::Foundation::FARPROC;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(transparent)]
@@ -19,9 +19,7 @@ impl CCApplication {
             let address = (std::mem::transmute::<FARPROC, unsafe extern "cdecl" fn() -> Ptr>(
                 windows::Win32::System::LibraryLoader::GetProcAddress(
                     get_hmod(),
-                    PCSTR(cstr!(
-                        "?sharedApplication@CCApplication@cocos2d@@SAPAV12@XZ"
-                    )),
+                    windows::core::s!("?sharedApplication@CCApplication@cocos2d@@SAPAV12@XZ"),
                 ),
             ))();
             Self { address }
@@ -34,9 +32,7 @@ impl CCApplication {
             (std::mem::transmute::<FARPROC, unsafe extern "fastcall" fn(Ptr, Ptr, f64)>(
                 windows::Win32::System::LibraryLoader::GetProcAddress(
                     get_hmod(),
-                    PCSTR(cstr!(
-                        "?setAnimationInterval@CCApplication@cocos2d@@UAEXN@Z"
-                    )),
+                    windows::core::s!("?setAnimationInterval@CCApplication@cocos2d@@UAEXN@Z"),
                 ),
             ))(self.address, 0, interval)
         }

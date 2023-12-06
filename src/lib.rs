@@ -97,9 +97,9 @@ macro_rules! impl_addr_funcs {
             }
         }
 
-        impl Into<$crate::Ptr> for $t {
-            fn into(self) -> $crate::Ptr {
-                self.address
+        impl From<$t> for $crate::Ptr {
+            fn from(value: $t) -> $crate::Ptr {
+                value.address
             }
         }
     };
@@ -119,13 +119,5 @@ macro_rules! impl_get_set {
         pub fn $set_varname(&self, $varname: $typ) {
             unsafe { *$crate::read_mem(self.address + $addr) = $varname }
         }
-    };
-}
-
-/// Converts a string to a C string (by appending `\0` to the end).
-#[macro_export]
-macro_rules! cstr {
-    ($str:expr) => {
-        concat!($str, "\0").as_ptr() as _
     };
 }
