@@ -36,27 +36,38 @@ pub const fn read_mem<T>(address: Ptr) -> *mut T {
 }
 
 /// Reads a pointer at a given address
+/// 
+/// # Safety
+/// 
+/// Not Safe :tm:
 #[inline]
 pub unsafe fn read_ptr(address: Ptr) -> Ptr {
     *read_mem(address)
 }
 
 /// Copies the given data to the given address in memory.
-#[inline]
-pub fn patch_mem(address: Ptr, data: &[u8]) {
-    use windows::Win32::System::Memory::VirtualProtect;
-    use windows::Win32::System::Memory::{PAGE_EXECUTE_READWRITE, PAGE_PROTECTION_FLAGS};
+pub fn patch_mem(address: Ptr, data: &[u8]) -> windows::core::Result<()> {
+    use windows::Win32::System::Diagnostics::Debug::WriteProcessMemory;
+    use windows::Win32::System::Memory::{
+        VirtualProtectEx, PAGE_EXECUTE_READWRITE, PAGE_PROTECTION_FLAGS,
+    };
+    use windows::Win32::System::Threading::GetCurrentProcess;
     unsafe {
         let mut old_prot = PAGE_PROTECTION_FLAGS(0);
-        VirtualProtect(
+        VirtualProtectEx(
+            GetCurrentProcess(),
             address as _,
-            data.len(),
+            256,
             PAGE_EXECUTE_READWRITE,
-            &mut old_prot, // old protection
+            &mut old_prot as _,
+        )?;
+        WriteProcessMemory(
+            GetCurrentProcess(),
+            address as _,
+            data.as_ptr() as _,
+            data.len(),
+            None,
         )
-        .unwrap();
-        std::ptr::copy_nonoverlapping(data.as_ptr(), address as _, data.len());
-        VirtualProtect(address as _, data.len(), old_prot, 0 as _).unwrap();
     }
 }
 
