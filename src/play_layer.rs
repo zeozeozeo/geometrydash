@@ -97,6 +97,7 @@ impl PlayLayer {
     impl_get_set!(last_death_percent, set_last_death_percent, i32, 0x4C0);
     impl_get_set!(camera_x, set_camera_x, f32, 0x48C);
     impl_get_set!(camera_y, set_camera_y, f32, 0x490);
+    impl_get_set!(is_paused, set_is_paused, bool, 0x52f);
 
     #[inline(always)]
     pub fn player1(&self) -> PlayerObject {
