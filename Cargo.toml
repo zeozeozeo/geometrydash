@@ -1,6 +1,6 @@
 [package]
 name = "geometrydash"
-version = "0.2.3"
+version = "0.2.4"
 edition = "2021"
 authors = ["zeozeozeo"]
 description = "Geometry Dash modding library"
@@ -15,6 +15,7 @@ build = "build.rs"
 bindgen = "0.69.1"
 
 [features]
+default = ["fmod"]
 fmod = []
 
 [dependencies]

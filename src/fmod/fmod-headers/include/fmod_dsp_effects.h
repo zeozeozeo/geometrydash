@@ -1,6 +1,6 @@
 /* ============================================================================================================= */
 /* FMOD Core API - Built-in effects header file.                                                                 */
-/* Copyright (c), Firelight Technologies Pty, Ltd. 2004-2022.                                                    */
+/* Copyright (c), Firelight Technologies Pty, Ltd. 2004-2021.                                                    */
 /*                                                                                                               */
 /* In this header you can find parameter structures for FMOD system registered DSP effects                       */
 /* and generators.                                                                                               */
@@ -126,7 +126,7 @@ typedef enum
 typedef enum
 {
     FMOD_DSP_NORMALIZE_FADETIME,
-    FMOD_DSP_NORMALIZE_THRESHOLD,
+    FMOD_DSP_NORMALIZE_THRESHHOLD,
     FMOD_DSP_NORMALIZE_MAXAMP
 } FMOD_DSP_NORMALIZE;
 

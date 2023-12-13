@@ -8,6 +8,12 @@ mod player_object;
 #[cfg(feature = "fmod")]
 pub mod fmod;
 
+#[cfg(feature = "fmod")]
+mod fmod_audio_engine;
+
+#[cfg(feature = "fmod")]
+pub use fmod_audio_engine::*;
+
 pub use game_manager::*;
 pub use game_object::*;
 pub use level_settings::*;
@@ -36,10 +42,6 @@ pub const fn read_mem<T>(address: Ptr) -> *mut T {
 }
 
 /// Reads a pointer at a given address
-/// 
-/// # Safety
-/// 
-/// Not Safe :tm:
 #[inline]
 pub unsafe fn read_ptr(address: Ptr) -> Ptr {
     *read_mem(address)
