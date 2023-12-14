@@ -1,8 +1,10 @@
 mod ccapplication;
 mod ccdirector;
+mod ccscheduler;
 
 pub use ccapplication::*;
 pub use ccdirector::*;
+pub use ccscheduler::*;
 use windows::Win32::Foundation::HMODULE;
 
 /// Get the `libcocos2d.dll` module handle.

@@ -1,4 +1,4 @@
-use super::get_hmod;
+use super::{get_hmod, CCScheduler};
 use crate::{impl_addr_funcs, Ptr};
 use windows::Win32::Foundation::FARPROC;
 
@@ -50,13 +50,18 @@ impl CCDirector {
     /// Get the animation interval value.
     pub fn get_animation_interval(&self) -> f64 {
         unsafe {
-            (std::mem::transmute::<FARPROC, unsafe extern "cdecl" fn(Ptr) -> f64>(
+            (std::mem::transmute::<FARPROC, unsafe extern "thiscall" fn(Ptr) -> f64>(
                 windows::Win32::System::LibraryLoader::GetProcAddress(
                     get_hmod(),
                     windows::core::s!("?getAnimationInterval@CCDirector@cocos2d@@QAENXZ"),
                 ),
             ))(self.address)
         }
+    }
+
+    #[inline]
+    pub fn scheduler(&self) -> CCScheduler {
+        CCScheduler::from_address(self.address + 0x48)
     }
 }
 
